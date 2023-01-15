@@ -1,13 +1,13 @@
 package handlers
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net/http"
 
-	"github.com/demidmalyanov/url-shortener/database"
-	"github.com/demidmalyanov/url-shortener/models"
 	"github.com/demidmalyanov/url-shortener/shortener"
+	"github.com/demidmalyanov/url-shortener/storage"
 	"github.com/gin-gonic/gin"
 )
 
@@ -17,7 +17,7 @@ type UrlCreationRequest struct {
 
 const host = "http://localhost:8080/"
 
-func CreateShortURL(c *gin.Context, db *database.TokenDB) {
+func CreateShortURL(c *gin.Context, s storage.Storage) {
 	var createRequest UrlCreationRequest
 
 	if err := c.ShouldBindJSON(&createRequest); err != nil {
@@ -27,14 +27,15 @@ func CreateShortURL(c *gin.Context, db *database.TokenDB) {
 
 	urlToken := shortener.GenerateTokenForUrl(createRequest.Url)
 
-	// save in db
-	_, err := db.Insert(models.Token{
-		Token: urlToken,
+	token := storage.Token{
 		Url:   createRequest.Url,
-	})
+		Token: urlToken,
+	}
 
+	// save in db
+	err := s.Save(context.Background(), &token)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("can`t save in db:", err)
 	}
 
 	c.JSON(200, gin.H{
@@ -43,15 +44,14 @@ func CreateShortURL(c *gin.Context, db *database.TokenDB) {
 	})
 }
 
-func HandleURLRedirect(c *gin.Context, db *database.TokenDB) {
+func HandleURLRedirect(c *gin.Context, s storage.Storage) {
 
 	shortUrl := c.Param("shortUrl")
 	// save in db
 	fmt.Println(shortUrl)
 
-	initialUrl, err := db.GetUrlByToken(shortUrl)
+	initialUrl, err := s.Get(context.Background(), shortUrl)
 
-	fmt.Println("ggg", initialUrl)
 	if err != nil {
 		log.Fatal(err)
 	}
