@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/demidmalyanov/url-shortener/storage"
+	"github.com/demidmalyanov/url-shortener/pkg/storage"
 	_ "github.com/mattn/go-sqlite3"
 )
 

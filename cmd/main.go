@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/demidmalyanov/url-shortener/handlers"
-	"github.com/demidmalyanov/url-shortener/storage/sqlite"
+	"github.com/demidmalyanov/url-shortener/pkg/handlers"
+	"github.com/demidmalyanov/url-shortener/pkg/storage/sqlite"
 	"github.com/gin-gonic/gin"
 )
 

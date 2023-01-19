@@ -6,8 +6,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/demidmalyanov/url-shortener/shortener"
-	"github.com/demidmalyanov/url-shortener/storage"
+	"github.com/demidmalyanov/url-shortener/pkg/shortener"
+	"github.com/demidmalyanov/url-shortener/pkg/storage"
 	"github.com/gin-gonic/gin"
 )
 
