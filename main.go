@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	storageSqlitePath = "tokens.db"
+	storageSqlitePath = "data/tokens.db"
 )
 
 func main() {
