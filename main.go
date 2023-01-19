@@ -24,8 +24,6 @@ func main() {
 		log.Fatal("can't init storage: ", err)
 	}
 
-	// db := sqlite.New(storageSqlitePath)
-
 	r := gin.Default()
 
 	r.GET("/", func(c *gin.Context) {
@@ -35,11 +33,11 @@ func main() {
 	})
 
 	r.POST("/shorten-url", func(c *gin.Context) {
-		handlers.CreateShortURL(c, s )
+		handlers.CreateShortURL(c,s)
 	})
 
 	r.GET("/:shortUrl", func(c *gin.Context) {
-		handlers.HandleURLRedirect(c, s)
+		handlers.HandleURLRedirect(c,s)
 	})
 
 	err = r.Run(":8080")

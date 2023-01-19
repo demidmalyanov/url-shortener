@@ -50,11 +50,11 @@ func HandleURLRedirect(c *gin.Context, s storage.Storage) {
 	// save in db
 	fmt.Println(shortUrl)
 
-	initialUrl, err := s.Get(context.Background(), shortUrl)
+	t, err := s.Get(context.Background(), shortUrl)
 
 	if err != nil {
 		log.Fatal(err)
 	}
-	c.Redirect(302, initialUrl)
+	c.Redirect(302, t.Url)
 
 }

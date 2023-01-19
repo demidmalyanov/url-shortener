@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/demidmalyanov/url-shortener/storage"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 type Storage struct {

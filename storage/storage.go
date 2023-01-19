@@ -7,7 +7,8 @@ import (
 
 type Storage interface {
 	Save(ctx context.Context, t *Token) error
-	Get(ctx context.Context, token string) (url string, err error)
+	Get(ctx context.Context, token string) (*Token, error)
+	Init(ctx context.Context) error
 }
 
 type Token struct {
